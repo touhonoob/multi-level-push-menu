@@ -43,6 +43,7 @@
 				preventItemClick: true,
 				preventGroupItemClick: true,
 				swipe: 'both',
+                                hideUL: true,
 				onCollapseMenuStart: function() {},
 				onCollapseMenuEnd: function() {},
 				onExpandMenuStart: function() {},
@@ -590,7 +591,7 @@
 			function startMode( mode ) {
 				if( mode ) {
 					var $baseLevelHolder = $('#' + instance.settings.menuID + ' div.levelHolderClass:first');
-					$baseLevelHolder.find( 'ul' ).hide();
+					if(instance.settings.hideUL) $baseLevelHolder.find( 'ul' ).hide();
 					$baseLevelHolder.addClass( instance.settings.menuInactiveClass );
 					if( instance.settings.direction == 'rtl' ) {
 						$baseLevelHolder.stop().animate({
@@ -735,9 +736,13 @@
 									0
 							}, function(){
 								if( $( val ).attr( 'data-level' ) == $baseLevelHolder.attr( 'data-level' ) && collapseAll ){
+                                                                    if(instance.settings.hideUL) {
 									$baseLevelHolder.children( 'ul' ).first().hide(500, function(){
 										$baseLevelHolder.addClass( instance.settings.menuInactiveClass );
 									});
+                                                                    } else {
+                                                                        $baseLevelHolder.addClass( instance.settings.menuInactiveClass );
+                                                                    }
 								}
 								currWidth = $baseLevelHolder.width() + parseInt( $baseLevelHolder.css( 'margin-left' ) , 10 );
 								sizeElementWidth( instance.settings.container , currWidth );
